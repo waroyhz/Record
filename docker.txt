@@ -1,0 +1,38 @@
+Docker私有镜像仓库
+
+1、安装docker
+yum install docker
+2、启动服务
+systemctl start docker
+3、安装仓库端
+docker pull registry
+4、运行仓库端
+docker run \
+-d \
+-e SETTINGS_FLAVOR=s3 \
+-e AWS_BUCKET=mybucket \
+-e STORAGE_PATH=/registry \
+-e AWS_KEY=myawskey \
+-e AWS_SECRET=myawssecret \
+-e SEARCH_BACKEND=sqlalchemy \
+-p 5000:5000 \
+registry
+
+5、查看是否正常启动
+docker ps 	查看docker进程
+netstat -nltp  查看linux端口
+6、将docker镜像重新打包后
+7、
+8、
+9、
+10、
+11、
+12、
+13、
+14、
+15、
+16、
+17、
+18、
+打包docker
+
