@@ -110,4 +110,6 @@ Watchtower 自动更新docker
 tobegit3hub/seagull web形式管理容器和镜像
 
 文章：
-docker 集群文章： Docker Swarm 入门一篇文章就够了 http://www.jianshu.com/p/9eb9995884a5
+docker 集群文章： 
+Docker Swarm 入门一篇文章就够了 http://www.jianshu.com/p/9eb9995884a5
+http://www.cnblogs.com/atuotuo/p/6260591.html
