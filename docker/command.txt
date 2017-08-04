@@ -1,3 +1,5 @@
+Docker基础使用记录
+
 Docker私有镜像仓库
 
 1、安装docker
@@ -39,8 +41,7 @@ docker rmi 192.168.5.19:5000/mhjdeviceadmin
 sudo docker pull 192.168.5.19:5000/mhjdeviceadmin
 3、
 4、
-5、
-6、
+
 打包docker镜像，以官方tomcat镜像为准，加入war文件，映射日志，再启动镜像
 1、先获取docker镜像
 docker run -it tomcat
@@ -107,3 +108,8 @@ docker run \
 -p 5000:5000 \
 -v /home/docker/registry:/registry \
 registry
+
+
+实用的工具
+Watchtower 自动更新docker
+tobegit3hub/seagull web形式管理容器和镜像
