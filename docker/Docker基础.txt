@@ -1,6 +1,4 @@
-Docker基础使用记录
-
-Docker私有镜像仓库
+组建Docker私有镜像仓库
 
 1、安装docker
 https://dev.aliyun.com/ 阿里云docker镜像
@@ -80,9 +78,6 @@ ENTRYPOINT catalina.sh run
 
 3、重新打包
 docker build -t mhj/tomcat .
-
-
-
 
 
 #########################################################################
