@@ -1,0 +1,109 @@
+Docker私有镜像仓库
+
+1、安装docker
+https://dev.aliyun.com/ 阿里云docker镜像
+yum install docker
+2、启动服务
+systemctl start docker
+3、安装仓库端
+docker pull registry
+4、运行仓库端
+docker run \
+-d \
+-e SETTINGS_FLAVOR=s3 \
+-e AWS_BUCKET=mybucket \
+-e STORAGE_PATH=/registry \
+-e AWS_KEY=myawskey \
+-e AWS_SECRET=myawssecret \
+-e SEARCH_BACKEND=sqlalchemy \
+-p 5000:5000 \
+registry
+（启动未映射储存，当docker重启后数据会丢失）
+5、查看是否正常启动
+docker ps 	查看docker进程
+netstat -nltp  查看linux端口
+可直接使用浏览器访问测试，比如访问 http://192.168.5.19:5000/v2/
+6、将docker镜像重新打包后修改 tag
+sudo docker tag mhjdeviceadmin 192.168.5.19:5000/mhjdeviceadmin
+7、推送到仓库
+sudo docker push 192.168.5.19:5000/mhjdeviceadmin
+（如果推送提示HTTPS问题）
+修改”/etc/docker/daemon.json“文件。在文件中写入：
+{ "insecure-registries":["192.168.5.19:5000"] }
+8、写入成功！
+
+拉取操作
+1、删除创建的镜像
+docker rmi 192.168.5.19:5000/mhjdeviceadmin
+2、Pull镜像
+sudo docker pull 192.168.5.19:5000/mhjdeviceadmin
+3、
+4、
+5、
+6、
+打包docker镜像，以官方tomcat镜像为准，加入war文件，映射日志，再启动镜像
+1、先获取docker镜像
+docker run -it tomcat
+2、编写dockerfile
+############################################################
+# Dockerfile to build MHJ tomcat DeviceAdminManage container images
+# Based on Ubuntu
+############################################################
+
+# Set the base image to tomcat
+FROM tomcat
+
+# File Author / Maintainer
+MAINTAINER Example waroy
+
+#删除webapps内的文件
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+#加入配置
+ADD server.xml /usr/local/tomcat/conf/
+
+#加入war
+ADD deviceAdminManage.war /usr/local/tomcat/webapps/
+
+# Expose the default port
+EXPOSE 8080
+
+# Default port to execute the entrypoint
+CMD ["--port 8080"]
+
+#Run the default Tomcat server
+#CMD ["catalina.sh", "run"]
+
+# Set default container command
+ENTRYPOINT catalina.sh run
+
+3、重新打包
+docker build -t mhj/tomcat .
+
+
+
+
+
+#########################################################################
+其他常用命令：
+
+链接到docker的bash
+docker run -t -i ubuntu /bin/bash 
+附加到已经运行的容器，如果exit会导致容器退出
+docker attach bb2
+执行已经运行容器的bash
+docker exec -it bb2 /bin/sh
+daemon模式启动
+docker run -d -p 8080:8080 mhjdeviceadmin
+仓库启动映射到本地
+docker run \
+-d \
+-e SETTINGS_FLAVOR=s3 \
+-e AWS_BUCKET=mybucket \
+-e STORAGE_PATH=/registry \
+-e AWS_KEY=myawskey \
+-e AWS_SECRET=myawssecret \
+-e SEARCH_BACKEND=sqlalchemy \
+-p 5000:5000 \
+-v /home/docker/registry:/registry \
+registry
