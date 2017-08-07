@@ -18,7 +18,7 @@ docker run \
 -e SEARCH_BACKEND=sqlalchemy \
 -p 5000:5000 \
 registry
-（启动未映射储存，当docker重启后数据会丢失）
+（启动未映射储存，数据储存在容器内）
 5、查看是否正常启动
 docker ps 	查看docker进程
 netstat -nltp  查看linux端口
@@ -37,10 +37,9 @@ sudo docker push 192.168.5.19:5000/mhjdeviceadmin
 docker rmi 192.168.5.19:5000/mhjdeviceadmin
 2、Pull镜像
 sudo docker pull 192.168.5.19:5000/mhjdeviceadmin
-3、
-4、
 
-打包docker镜像，以官方tomcat镜像为准，加入war文件，映射日志，再启动镜像
+
+打包docker镜像，以官方tomcat镜像为准，加入war文件，启动镜像
 1、先获取docker镜像
 docker run -it tomcat
 2、编写dockerfile
@@ -83,7 +82,7 @@ docker build -t mhj/tomcat .
 #########################################################################
 其他常用命令：
 
-链接到docker的bash
+运行docker的bash
 docker run -t -i ubuntu /bin/bash 
 附加到已经运行的容器，如果exit会导致容器退出
 docker attach bb2
