@@ -1,0 +1,32 @@
+Consul创建Docker镜像，并运行：
+Consul是一个拥有DNS和HTTP API的服务。它主要负责服务发现，以及对服务的健康检测和“键-值”对存储库。
+执行以下命令在Docker container中运行Consul：
+
+docker run -it -h node \
+-p 8500:8500 \
+-p 8600:53/udp \
+progrium/consul \
+-server \
+-bootstrap \
+-advertise 127.0.0.1 \
+-log-level debug
+
+运行：
+docker run -it -h node \
+ -p 8500:8500 \
+ -p 53:53/udp \
+ progrium/consul \
+ -server \
+ -bootstrap \
+ -advertise $DOCKER_IP
+
+
+运行 Registrator
+
+# docker run -d  --name=registrator  --net=host  --volume=/var/run/docker.sock:/tmp/docker.sock  \
+gliderlabs/registrator:latest  consul://127.0.0.1:8500
+
+
+运行服务器镜像
+docker run -d -P -v /home/waroy/文档/dcoker/wwwServer/mhjvip/www:/var/www -e "SERVICE_NAME=mhjvip" dockerImange
+
