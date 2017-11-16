@@ -1,0 +1,7 @@
+#fix https client x509 error
+RUN apt-get install -y ca-certificates
+
+#set timezone
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
